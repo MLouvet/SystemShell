@@ -10,7 +10,7 @@
 char *get_current_dir_name(void);
 #endif 
 
-#define ARG_SEPARATOR ' '
+#define ARG_SEPARATOR ' '  //TEST
 
 //Prototypes
 
