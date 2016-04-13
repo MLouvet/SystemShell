@@ -5,6 +5,6 @@
 #define BUFFER_SIZE 100
 
 void lancerShell();
-void lanceProg(char* nomProg);
+void lanceProg(int argc, char* arguments[]);
 
 #endif // PRELIMINAIRE_H_INCLUDED

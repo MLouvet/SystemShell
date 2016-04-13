@@ -1,24 +1,6 @@
 #include "CustomShell.h"
 #include "simpleio.h"
 
-int main(int argc, char* argv[])
-{
-	char* buf;
-	char ** splitBuf = NULL;
-	int nbArgs = 0;
-	while (true)
-	{
-		/*if ((buf = lireChaine()) == NULL || strlen(buf) == 0)
-			return 0;*/
-			//nbArgs = splitArgs(buf, &splitBuf);
-		nbArgs = splitArgs("a bb  ccc dddd  eeeee   ", &splitBuf);
-		for (int i = 0; i < nbArgs; i++)
-		{
-			printf("\nArg(%d) = %s", i, splitBuf[i]);
-		}
-	} 
-}
-
 unsigned int splitArgs(const char string[], char *** splitStr)
 {
 	int i = 0, j, nbArgs = 0;
@@ -56,14 +38,14 @@ unsigned int splitArgs(const char string[], char *** splitStr)
 	return nbArgs;
 }
 
-void cd(int argc, char * argv[])
-{
-	char * currentDir = NULL;
-
-#ifdef WIN32 //Windows
-	currentDir = malloc(BUFSIZ * sizeof(char));
-	GetCurrentDirectoryA(BUFSIZ, currentDir);
-#else
-	currentDir = get_current_dir_name();
-#endif
-}
+//void cd(int argc, char * argv[])
+//{
+//	char * currentDir = NULL;
+//
+//#ifdef WIN32 //Windows
+//	currentDir = malloc(BUFSIZ * sizeof(char));
+//	GetCurrentDirectoryA(BUFSIZ, currentDir);
+//#else
+//	currentDir = get_current_dir_name();
+//#endif
+//}

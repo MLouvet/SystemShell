@@ -12,27 +12,10 @@
 #define BUFFER_SIZE 100
 
 
-void cd(char* nomRepertoire)
+void cd(char* arguments[])
 {
-    int i =0, taille = nbOccurence(nomRepertoire,' ')+1;
-    char cwd[BUFFER_SIZE] = "\0";
-    getcwd(cwd,sizeof(cwd)); // On recupere le nom du chemin absolu du repertoire courant
-
-    char** arguments = creerTableauBi(nomRepertoire);
-
-
-    if(chdir(arguments[1]) == -1)
-        printf("\nCD impossible : %s n existe pas\n",nomRepertoire);
-
-    else
-    {
-        printf("\nCD reussie , nouveau repertoire : %s\n",getcwd(cwd,sizeof(cwd)));
-    }
-
-    for(i=0;i < taille ;i++)
-        free(arguments[i]);
-
-    free(arguments);
+	if (chdir(arguments[1]) == -1)
+		printf("\nCD impossible : %s n existe pas\n", arguments[1]);
 }
 
 void exitShell()
