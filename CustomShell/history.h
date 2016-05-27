@@ -1,6 +1,10 @@
-#pragma once
+#ifndef HISTORY_H
+#define HISTORY_H
 
-
+#include "CustomShell.h"
+#include "commandHandler.h"
+#include <stdlib.h>
+#include <string.h>
 
 //File simplement chaînée simple pour l'historique
 typedef struct hist_entry hist_entry;
@@ -16,7 +20,7 @@ struct history
 {
 	hist_entry* first;
 	hist_entry* last;
-	int size;
+	unsigned int size;
 };
 
 //Créé et retourne un nouvel historique vide.
@@ -28,6 +32,19 @@ history newHistory();
 //	- str	: chaîne à ajouter à l'historique
 void addEntry(history* h, const char str[]);
 
+//Affiche les n dernières entrées de l'historique
+//Entrée :
+//	- h : Historique à afficher
+//	- n : Nombre d'entrées à afficher
+void historyLastN(const history h, unsigned int n);
+
+//Affiche la n-ième entrée de l'historique puis l'exécute
+//Entrée :
+//	- h : Historique à afficher
+//	- n : Entrée à afficher
+void repeatHistoryEntry(history* h, unsigned int n);
+
+
 //Affiche l'historique dans l'ordre chronologique
 //Entrée :
 //	- h : Historique à afficher
@@ -37,3 +54,13 @@ void printHistory(const history h);
 //Entrée :
 //	- h : Historique à vider.
 void clearHistory(history h);
+
+//Fonction chargée de gérer l'historique
+void handleHistory(history* h, command * cmd);
+
+int getLength(int i);
+
+
+//Historique global
+extern history globalHistory;
+#endif

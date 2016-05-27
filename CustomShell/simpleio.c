@@ -1,6 +1,5 @@
 #include "simpleio.h"
 
-
 /* Renvoie une chaine lue au clavier, de taille maximale MAX_BUF_SIZE */
 char* lireChaine()
 {
@@ -12,11 +11,11 @@ char* lireChaine()
 	if (buffer == NULL) return buffer;
 
 	/* Recuperation de la chaine */
-	fgets(buffer, MAX_BUF_SIZE, stdin);
+	if (fgets(buffer, MAX_BUF_SIZE, stdin) == NULL) return NULL;
 
 	/* On remplace l'eventuel 'Entree' par '\0' */
 	i = strlen(buffer) - 1;
-	if (buffer[i] == '\n') buffer[i] = '\0';
+	if (i >= 0 && buffer[i] == '\n') buffer[i] = '\0';
 	return buffer;
 }
 
@@ -57,4 +56,43 @@ int lireEntierEntre(int min, int max)
 		if (result < min || result > max) printf("Erreur de bornes : la valeur saisie doit être comprise entre %d et %d\n", min, max);
 	} while (result < min || result > max);
 	return result;
+}
+
+
+char* ReadFile(FILE *file)
+{
+	char *buffer = NULL;
+	struct stat st;
+
+	if (file == NULL) return NULL;
+
+	fstat(fileno(file), &st);													//Statistiques du fichier
+	buffer = malloc(sizeof(char) * (st.st_size + 1));					//On alloue une chaîne de la taille du fichier
+	if (buffer == NULL)
+	{
+		fprintf(stderr, "\nEchec d'allocation pour la lecture d'un fichier");
+		return NULL;
+	}
+	if (fread(buffer, st.st_size, st.st_size, file) > st.st_size)	//On lit l'intégralité du fichier
+	{
+		free(buffer);													//Erreur dans la lecture, on
+		buffer = NULL;													//libère la mémoire utilisée
+		fprintf(stderr, "\nErreur de lecture du fichier");
+		return NULL;
+	}
+
+	buffer[st.st_size] = '\0';											//On formate la chaîne correctement
+	return buffer;
+}
+
+bool isNullOrWhiteSpace(const char str[])
+{
+	if (str == NULL) return true;
+
+	int size = strlen(str);
+	for (int i = 0; i < size; i++)
+		if (str[i] != ' ')
+			return false;
+
+	return true;
 }

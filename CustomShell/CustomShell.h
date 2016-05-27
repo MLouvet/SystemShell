@@ -1,21 +1,43 @@
-#pragma once
+#ifndef CUSTOM_SHELL_H
+#define CUSTOM_SHELL_H
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#ifdef WIN32
-#include <Windows.h>
-#else
 #include <unistd.h>
+#include <sys/wait.h>
+
+#include "commandHandler.h"
+#include "history.h"
+#include "simpleio.h"
+#include "touch.h"
+#include "cp.h"
+#include "cat.h"
+
+/* Chargï¿½ de gï¿½rer le fonctionnement basique du Shell :
+* 1 : Affichage du conxtexte actuel : user@machine:repertoire_courant$
+* 2 : Lecture de l'entrï¿½e -> Transformation en succession de commande dans commandHandler
+* 3 : Ajout de l'entrï¿½e ï¿½ l'historique
+* 4 : Puis exï¿½cution des commandes ->
+*
+*/
+
+
+//Le but de cette fonction est d'afficher user@machine:repertoire/courant
+void printCurrContext();
+//Reproduit le comportement de la fonction CD
+void cd(command * cmd);
+
+void exitShell(command * cmd);
+
+
 char *get_current_dir_name(void);
-#endif 
+int gethostname(char *name, size_t len);
 
-#define ARG_SEPARATOR ' '  //TEST
-//14h47
-//Prototypes
+bool selectEarlyFunction(command * cmd);
+void selectFunction(bool commandAlreadyDone, char path[], command * cmd);
 
-//14h51
 
-//Le but principal de cette fonction est de découper la chaîne d'arguments séparés par des espaces
-unsigned int splitArgs(const char * string, char *** splitStr);
-//void cd(int argc, char* argv[]);
+
+#endif // CUSTOM_SHELL_H
